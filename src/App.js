@@ -18,6 +18,8 @@ const stage = [
   {id: 3, name: "end"}
 ]
 
+const guessesNumber = 3;
+
 function App() {
 
   const [gameStage, setGameStage] = useState(stage[0].name);
@@ -29,7 +31,7 @@ function App() {
 
   const [guessedLetter, setGuessedLetter] = useState([]);
   const [wrongLetter, setWrongLetter] = useState([]);
-  const [guesses, setGuesses] = useState(3);
+  const [guesses, setGuesses] = useState(guessesNumber);
   const [score, setScore] = useState(0)
 
   const pickWordAndCategory = () => {
@@ -62,12 +64,48 @@ function App() {
   }
 
   // Process the letter input
-  const verifyLetter = () => {
-    setGameStage(stage[2].name);
+  const verifyLetter = (letter) => {
+    const normalizedLetter = letter.toLowerCase();
+
+    //check if the letter has already been utilized
+    if(guessedLetter.includes(normalizedLetter) || wrongLetter.includes(normalizedLetter)){
+      return
+    }
+
+    //push guesses letter or remove a guess
+    if(letters.includes(normalizedLetter)){
+      setGuessedLetter((actualGuessesLetter) => [
+        ...actualGuessesLetter,
+        normalizedLetter
+      ])
+    } else{
+      setWrongLetter((actualWrongLetter) => [
+        ...actualWrongLetter,
+        normalizedLetter
+      ])
+      
+      setGuesses((actualGuesses) => actualGuesses - 1)
+    }
   }
+
+  const clearLetterStates = () => {
+    setGuessedLetter([])
+    setWrongLetter([])
+  }
+
+  //monitor um dado 
+  useEffect (() => {
+    if(guesses <= 0){
+      clearLetterStates();
+
+      setGameStage([2].name)
+    }
+  }, [guesses])
 
   //restart the game
   const retry = () => {
+    setScore(0);
+    setGuesses(guessesNumber);
     setGameStage(stage[0].name)
   }
 
