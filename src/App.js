@@ -10,7 +10,7 @@ import GameOver from "./components/GameOver"
 import { useCallback, useEffect, useState } from 'react';
 
 //Data
-import { wordsList } from './data/word';
+import { wordsList } from './data/words';
 
 const stage = [
   {id: 1, name: "start"},
@@ -23,8 +23,36 @@ function App() {
   const [gameStage, setGameStage] = useState(stage[0].name);
   const [words] = useState(wordsList);  
 
+  const [pickedWord, setPickedWord] = useState('');
+  const [pickedCategory, setPickedCategory] = useState('');
+  const [letters, setLetters] = useState([]);
+
+  const pickWordAndCategory = () => {
+    const categories = Object.keys(words)
+    const category = categories[Math.floor(Math.random() * Object.keys(categories).length)]
+
+    //pick a random word
+    const word = words[category][Math.floor(Math.random() * words[category].length)]
+
+    return {word, category}
+  }
+
   // mudando o stagio do jogo
   const startGame = () => {
+    //picke word and category
+    const {word, category} = pickWordAndCategory();
+
+    //create an array of letters
+    let wordLetters = word.split('');
+    wordLetters = wordLetters.map((l) => {
+      l.toLowerCase();
+    })
+    
+    //fill stage
+    setPickedWord(word);
+    setPickedCategory(category);
+    setLetters(letters);
+    console.log(word,  category, wordLetters)
     setGameStage(stage[1].name);
   }
 
