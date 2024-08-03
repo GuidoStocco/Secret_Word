@@ -52,7 +52,7 @@ function App() {
     setPickedWord(word);
     setPickedCategory(category);
     setLetters(letters);
-    console.log(word,  category, wordLetters)
+    
     setGameStage(stage[1].name);
   }
 
