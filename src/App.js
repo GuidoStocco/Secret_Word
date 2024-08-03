@@ -23,9 +23,14 @@ function App() {
   const [gameStage, setGameStage] = useState(stage[0].name);
   const [words] = useState(wordsList);  
 
+  // mudando o stagio do jogo
+  const startGame = () => {
+    setGameStage(stage[1].name);
+  }
+
   return (
     <div className='App'>
-      {gameStage === "start" && <StartScreen/>}
+      {gameStage === "start" && <StartScreen startGame={startGame}/>}
       {gameStage === "game" && <Game/>}
       {gameStage === "end" && <GameOver/>}
     </div>
