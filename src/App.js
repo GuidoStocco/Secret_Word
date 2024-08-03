@@ -28,11 +28,21 @@ function App() {
     setGameStage(stage[1].name);
   }
 
+  // Process the letter input
+  const verifyLetter = () => {
+    setGameStage(stage[2].name);
+  }
+
+  //restart the game
+  const retry = () => {
+    setGameStage(stage[0].name)
+  }
+
   return (
     <div className='App'>
       {gameStage === "start" && <StartScreen startGame={startGame}/>}
-      {gameStage === "game" && <Game/>}
-      {gameStage === "end" && <GameOver/>}
+      {gameStage === "game" && <Game verifyLetter={verifyLetter}/>}
+      {gameStage === "end" && <GameOver retry={retry}/>}
     </div>
   );
 }
