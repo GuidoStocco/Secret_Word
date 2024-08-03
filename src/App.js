@@ -69,18 +69,18 @@ function App() {
 
     //check if the letter has already been utilized
     if(guessedLetter.includes(normalizedLetter) || wrongLetter.includes(normalizedLetter)){
-      return
+      return;
     }
 
     //push guesses letter or remove a guess
     if(letters.includes(normalizedLetter)){
-      setGuessedLetter((actualGuessesLetter) => [
-        ...actualGuessesLetter,
+      setGuessedLetter((actualGuessesLetters) => [
+        ...actualGuessesLetters,
         normalizedLetter
       ])
     } else{
-      setWrongLetter((actualWrongLetter) => [
-        ...actualWrongLetter,
+      setWrongLetter((actualWrongLetters) => [
+        ...actualWrongLetters,
         normalizedLetter
       ])
       
@@ -98,7 +98,7 @@ function App() {
     if(guesses <= 0){
       clearLetterStates();
 
-      setGameStage([2].name)
+      setGameStage(stage[2].name)
     }
   }, [guesses])
 
